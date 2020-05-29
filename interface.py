@@ -71,6 +71,7 @@ class Visual:
             
             # Daqui pra baixo, estamos filtrando que tipo de evento
             # ocorreu, e determinamos o que faremos em cada caso
+            
             if event == 'c': # Botão CLEAR
                 self.clear_display = self.update_display('')
                 operand = None

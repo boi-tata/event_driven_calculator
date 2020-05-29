@@ -1,5 +1,7 @@
 # Event-Driven Calculator (Calculadora baseada em Eventos)
 
+## Mas, porque?
+
 Este é um projeto pessoal, construído com a finalidade de ser uma fonte de
 aprendizado de diversos tópicos que, na minha opinião, possuem alguma
 importância ou são interessantes.
@@ -10,9 +12,16 @@ importância ou são interessantes.
 > - Acoplamento de código
 > - Interface gráfica
 > - Design Patterns
-> - Legibilidade e manutenção
+> - Legibilidade e manutenção de código
+> - Testes automatizados
+
+No mais, espero que se divirtam tanto quanto eu me divirto enquanto tento
+expandir este projeto, adicionando mais funcionalidades e melhorando o código.
+
+---
 
 ## Documentação e idioma
+
 Tentarei documentar o máximo possível.
 
 Manterei toda a documentação do projeto (dentro e fora do código) em português,
@@ -30,5 +39,46 @@ for pessoa in lista_funcionarios:
     yield pessoa.get('sobrenome').lower()
 ````
 
-No mais, espero que se divirtam tanto quanto eu me divirto enquanto tento
-expandir este projeto, adicionando mais funcionalidades e melhorando o código.
+---
+
+## Itens a serem implementados
+
+### Interface gráfica
+- Dimensionamento automático da janela
+- Tamanho padrão para os botões
+- Pop-up de erro
+- Histórico de operações
+- Entrada de números negativos
+- Entrada de números fracionários
+- Entrada em notação científica
+
+### Operações
+#### Elementares e extensões
+- ~~Adição~~
+- ~~Subtração~~
+- ~~Multiplicação~~
+- ~~Divisão~~
+- Fatorial
+- Porcentagem
+- Radiciação
+- Potenciação
+- Logaritmação
+
+#### Sequências e progressões
+- Somatório
+- Produtório
+- Fibonacci
+- Progressão Aritmética
+- Progressão Geométrica
+
+#### Análise combinatória
+- Arranjos
+- Combinações
+- Permutações
+- Números Binomiais
+
+### Arquitetura baseada em Eventos
+- Barramento de eventos: Broker/Mediador
+- Modelo de entrega: Fila/Tópico
+- Assíncronia entre componentes
+- Transferência de estado
