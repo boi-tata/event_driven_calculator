@@ -15,6 +15,11 @@ importância ou são interessantes.
 > - Legibilidade e manutenção de código
 > - Testes automatizados
 
+Para este projeto ficar mais divertido, será uma regra não utilizar nenhuma
+operação que não faça parte das operações elementares para implementação.
+Então, será proibida a importação de módulos matemáticos, até mesmo os inclusos
+na distribuição padrão do Python.
+
 No mais, espero que se divirtam tanto quanto eu me divirto enquanto tento
 expandir este projeto, adicionando mais funcionalidades e melhorando o código.
 
@@ -53,11 +58,13 @@ for pessoa in lista_funcionarios:
 - Entrada em notação científica
 
 ### Operações
-#### Elementares e extensões
+#### Elementares
 - ~~Adição~~
 - ~~Subtração~~
 - ~~Multiplicação~~
 - ~~Divisão~~
+
+#### Não elementares
 - Fatorial
 - Porcentagem
 - Radiciação
