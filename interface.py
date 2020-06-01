@@ -3,6 +3,12 @@ Módulo contendo todos os elementos que fazem interface com o usuário.
 """
 
 import PySimpleGUI as sg
+from events import (
+    OperationEvent,
+    ErrorEvent,
+    ResultEvent,
+    InputEvent,
+)
 
 class Visual:
     """
@@ -79,21 +85,15 @@ class Visual:
             elif event == '=': # Resposta da operação solicitada
                 value_of_display = int(self.display.Get())
                 # Notificando todos os observers sobre o evento, e guardando
-                # o resultado do primeiro que responder algo diferente de
-                # `None`
-                result = self.notifyAll({
-                    'operation': operation,
-                    'operands': (operand, value_of_display),
-                })
-                if isinstance(result, ZeroDivisionError):
-                    # Caso a resposta seja um erro de divisão por zero
-                    clear_display = self.update_display('VC É BURRO?')
-                elif isinstance(result, Exception):
-                    # Caso a resposta seja um outro erro qualquer
+                # o resultado do primeiro que responder com um `ResultEvent`
+                op = OperationEvent(operation, (operand, value_of_display))
+                response = self.notifyAll(op)
+                if isinstance(response, ErrorEvent):
+                    # Caso a resposta seja um erro qualquer
                     clear_display = self.update_display('DEU RUIM AQUI')
-                else:
-                    # Caso a resposta não seja um erro
-                    clear_display = self.update_display(str(result))
+                elif isinstance(response, ResultEvent):
+                    # Caso a resposta seja um resultado
+                    clear_display = self.update_display(str(response.value))
             elif event.isdigit(): # Um dígito foi pressionado
                 # Verificando se precisa apagar o display antes de concatenar
                 # os dígitos
@@ -114,14 +114,13 @@ class Visual:
     def notifyAll(self, event):
         """
         Notifica todos os observadores sobre um evento ocorrido, e retorna
-        a primeira resposta diferente de `None`. Caso nenhum observador
-        responda, retorna `None`.
+        a primeira resposta do tipo `ResultError` ou `ErrorEvent`. Caso nenhum
+        observador responda, retorna `None`.
         """
 
         for obs in self.observers:
-            # Passando o evento ao observador
             response = obs(event)
-            if not (response is None):
+            if isinstance(response, (ResultEvent, ErrorEvent)):
                 return response
     
     def subscribe(self, observer):

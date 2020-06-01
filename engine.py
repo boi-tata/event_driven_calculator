@@ -3,6 +3,8 @@ Módulo contendo todos os elementos necessários para realizar as operações
 matemáticas possíveis na calculadora.
 """
 
+from events import ErrorEvent, OperationEvent, ResultEvent
+
 class Processor:
     """
     Classe para realizar operações matemáticas.
@@ -50,19 +52,19 @@ class Processor:
         func = mapped_operations[operation]
         return func(x, y)
 
-    def receive_event(self, event:dict):
+    def receive_event(self, event):
         """
-        Processa eventos, retornando o resultado ou o erro causado.
-        Chaves esperadas:
-        >- 'operation': simbolo da operação matemática [str]
-        >- 'operands': par de operandos envolvidos na operação [iterable]
+        Processa eventos do tipo `OperationEvent`.
+        Se o cálculo for realizado, retorna uma instância de `ResultEvent`.
+        Se houver erro, retorna uma instância de `ErrorEvent`.
         """
-        op = event.get('operation')
-        if op:
-            x, y = event['operands']
+        if isinstance(event, OperationEvent):
+            op = event.operator
+            x, y = event.operands
             try:
-                return self.resolve(op, x, y)
+                response = ResultEvent(self.resolve(op, x, y))
             except Exception as e:
-                return e
-        
+                response = ErrorEvent(event, e)
+            return response
+
         return None
