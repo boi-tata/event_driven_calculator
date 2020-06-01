@@ -51,9 +51,6 @@ class Visual:
             fourth_line,
         ]
         self.window = sg.Window('Calculadora', layout, size=(50, 170))
-        self.clear_display = False
-        self.operand = None
-        self.operation = None
         self.observers = []
 
 
@@ -62,7 +59,10 @@ class Visual:
         Inicia a execução da interface gráfica (leitura e processamento de
         eventos)
         """
-
+        clear_display = False
+        operand = None
+        operation = None
+        
         while True:
             event, _ = self.window.read() # Esperando um evento acontecer
 
@@ -73,7 +73,7 @@ class Visual:
             # ocorreu, e determinamos o que faremos em cada caso
             
             if event == 'c': # Botão CLEAR
-                self.clear_display = self.update_display('')
+                clear_display = self.update_display('')
                 operand = None
                 operation = None
             elif event == '=': # Resposta da operação solicitada
@@ -87,27 +87,27 @@ class Visual:
                 })
                 if isinstance(result, ZeroDivisionError):
                     # Caso a resposta seja um erro de divisão por zero
-                    self.clear_display = self.update_display('VC É BURRO?')
+                    clear_display = self.update_display('VC É BURRO?')
                 elif isinstance(result, Exception):
                     # Caso a resposta seja um outro erro qualquer
-                    self.clear_display = self.update_display('DEU RUIM AQUI')
+                    clear_display = self.update_display('DEU RUIM AQUI')
                 else:
                     # Caso a resposta não seja um erro
-                    self.clear_display = self.update_display(str(result))
+                    clear_display = self.update_display(str(result))
             elif event.isdigit(): # Um dígito foi pressionado
                 # Verificando se precisa apagar o display antes de concatenar
                 # os dígitos
-                if self.clear_display:
-                    self.clear_display = self.update_display('')
+                if clear_display:
+                    clear_display = self.update_display('')
                 # Concatenando os dígitos
                 new_value = self.display.Get() + event
                 self.update_display(new_value)
                 # Na operação de cima, não salvamos o retorno do método pq não
-                # queremos alterar o estado da variável `self.clear_display`
+                # queremos alterar o estado da variável `clear_display`
             else: # Uma operação foi inclusa
                 operand = int(self.display.Get())
                 operation = event
-                self.clear_display = True
+                clear_display = True
         
         self.window.close()
     
