@@ -38,10 +38,10 @@ class ResultEvent(Event):
     Resultado de uma operação realizada.
     """
 
-    __slots__ = ('result',)
+    __slots__ = ('value',)
 
-    def __init__(self, result):
-        self.result = result
+    def __init__(self, value):
+        self.value = value
 
 
 class ErrorEvent(Event):
