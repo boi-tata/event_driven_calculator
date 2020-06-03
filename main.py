@@ -2,8 +2,8 @@
 Ponto de entrada da aplicação, que define como os elementos irão se conectar.
 """
 
-from interface import Visual
-from engine import Processor
+from components.interface import Visual
+from components.engine import Processor
 
 cpu = Processor()
 app = Visual()
